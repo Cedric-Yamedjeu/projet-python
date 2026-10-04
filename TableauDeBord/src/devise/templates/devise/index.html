@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tableau de Devise</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script></head>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-trendline@3.1.1/dist/chartjs-plugin-trendline.min.js"></script>
+<body class="bg-black">
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col">
+            <h1 class="text-white">Tableau de Bord - {{ page_label }}</h1>
+            <a href="{% url 'dashboard' days_range=7 currencies=currencies %}" class="btn {% if page_label == 'Semaine' %}btn-info {% else %} btn-secondary {% endif %}">Semaine</a>
+            <a href="{% url 'dashboard' days_range=30 currencies=currencies %}" class="btn {% if page_label == 'Mois' %}btn-info {% else %} btn-secondary {% endif %}">Mois</a>
+            <a href="{% url 'dashboard' days_range=365 currencies=currencies %}" class="btn {% if page_label == 'Année' %}btn-info {% else %} btn-secondary {% endif %}">Année</a>
+
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        {% for currency, rates in rates.items %}
+        <div class="col-md-11 col-lg-6 ">
+           <canvas id="chart-{{ currency }}"></canvas>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    {% for currency, rates in rates.items %}
+        /* global Chart */
+        var ctx = document.getElementById("chart-{{ currency }}");
+        new Chart(ctx, {
+            "type":'line',
+            "data":{
+                "labels":{{ days|safe }},
+             "datasets": [{
+                "label":"{{ currency }}",
+                "data":{{ rates|safe }},
+                 "fill":false,
+                 "borderColor":'rgb(255,138,138)',
+                 "trendlineLinear":{
+                     "colorMin": "#004AAD",
+                     "colorMax": "#004AAD",
+                     "lineStyle": "solid",
+                     "width":3
+                 }
+            }]
+            }
+        })
+    {% endfor %}
+</script>
+</body>
+</html>
+
