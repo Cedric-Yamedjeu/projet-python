@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My web page </title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<div class = "container">
+     <h1>Hello {{ prenom }}! Welcome to my page</h1>
+     <h2>Today is {{ date|date:"d F Y H:i:s"}}</h2>
+    <h3>Il est actuellement {{date|date:"H\hi"}}</h3>
+</div>
+
+</body>
+</html>
