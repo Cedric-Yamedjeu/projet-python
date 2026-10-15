@@ -21,7 +21,7 @@ Projet réalisé pendant ma formation Python pour découvrir la création d'appl
 ## Installation
 
 ```bash
-git clone https://github.com/TON-PSEUDO/Formation_Python.git
+git clone https://github.com/Cedric-Yamedjeu/Formation_Python.git
 cd Formation_Python/Bibliotheque_Typer
 
 python -m venv .venv
